@@ -25,7 +25,7 @@ for i in range(2002, 2016):
     for j in rts:
         if 'P' in j.text:
             length = length - 1
-    for j in (1,length+1):
+    for j in range(1,length+1):
         link = link_part1 + str(i) + link_part2 + str(j)
         page = requests.get(link)
         tree = html.fromstring(page.text)

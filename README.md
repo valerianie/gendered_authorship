@@ -1,6 +1,3 @@
-# Gendered Authorship
-##### Research Project 
-##### Valeria N.
-##### 3 October 2015
-
-*This repository contains codes and datasets for the research project on gendered authorship in a certain discipline*
+##### Research Project: Gendered Authorship 
+ 
+This repository contains work for the research project on gendered authorship in a certain academic discipline.

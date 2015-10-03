@@ -16,7 +16,7 @@ for i in range(1,8):
 
 f.write(titles)
 
-for i in range(2002, 2003):
+for i in range(2002, 2016):
     conference = link_part1 + str(i) + '.princeton.edu/days'
     page = requests.get(conference)
     tree = html.fromstring(page.text)

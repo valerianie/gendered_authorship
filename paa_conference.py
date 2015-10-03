@@ -34,7 +34,7 @@ for i in range(2002, 2016):
             s_title = z
         papers = tree.xpath('//li/p')
         for k in papers:
-            paper_title = k.xpath('a')
+            paper_titles = k.xpath('a')
             paper_authors = k.xpath('span')
             if len(paper_titles) > 0:                
                 abstract_link = link_part1 + str(i) + ".princeton.edu" + paper_titles[0].attrib['href']

@@ -1,9 +1,0 @@
-title	author1_firstn	author1_name	author2_firstn	author2_name	author3_firstn	author3_name	author4_firstn	author4_name	author5_firstn	author5_name	author6_firstn	author6_name
-Modernization and Intergenerational Transfers in Indonesia: An Examination of Data from the Indonesian Family Life Survey	Randi	S. Cartmill	Victoria	A. Beard
-Intergenerational Transfers, Income Shocks And Human Capital: Evidence From A Natural Experiment	Enrica	 Croda
-Altering Work Patterns to Accommodate Help to Elderly Parents: Are Baby-Boomers Juggling Work and Family in New Patterns?	Martha	 Hill	Wei-Jun	Jean Yeung
-Participating in Transfer Networks: The Family versus the Community	Una	Okonkwo  Osili	Cagla	 Okten
-Perceived HIV Risk and Coercive Sex: Evidence from Rakai, Uganda	Michael	 Koenig	Tom	 Lutalo	Feng	 Zhao	Noah	 Kiwanuka	Fred	 Wabwire-Mangen
-Confronting the Myth of "Sugar Daddies": Recent Findings Linking Age Differences, Economic Transaction, and Risky Behavior in Sexual Relations in Urban Kenya	Nancy	 Luke
-Mobility, Sexual Behavior and the Spread of HIV in Cameroon	Nathalie	 Lydié	Jamie	 Robinson	Benoît	 Ferry	Évina	 Akam
-Sequence, Composition and Geographic Bridging in Concurrent Partnerships: Evidence from Uganda	Wassana	 Im-em	Martina	 Morris

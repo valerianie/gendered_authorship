@@ -38,13 +38,14 @@ for i in range(2002, 2016):
             paper_authors = k.xpath('span')
             if len(paper_titles) > 0:                
                 abstract_link = link_part1 + str(i) + ".princeton.edu" + paper_titles[0].attrib['href']
-                print abstract_link
                 abstract_page = requests.get(abstract_link)
                 abstract_tree = html.fromstring(abstract_page.text)
                 abstract_divs = abstract_tree.xpath('//div[@class="abstract"]')
-                abstract = abstract_divs[0].text.replace('"','')
-                abstract = abstract.replace('\r',' ')
-                abstract = abstract.replace('\n',' ')
+                abstract = ""
+                if len(abstract_divs) > 0:
+                    abstract = abstract_divs[0].text.replace('"','')
+                    abstract = abstract.replace('\r',' ')
+                    abstract = abstract.replace('\n',' ')
                 title = paper_titles[0].text.replace('"','')
                 f.write('\n'+str(i)+'\t'+str(j)+'\t'+s_title+'\t'+title+'\t'+abstract)
                 for l in paper_authors:

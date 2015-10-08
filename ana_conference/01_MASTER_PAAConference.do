@@ -1,14 +1,14 @@
 clear all
 set more off
 
-global SOURCE "D:\Dateien\Gendered_Authorship"
-global DERIVED "D:\Dateien\Gendered_Authorship"
+global SOURCE "D:\Dateien\Gendered_Authorship\gendered_authorship"
+global DERIVED "D:\Dateien\Gendered_Authorship\gendered_authorship"
 
 ******************* STEP 1 ***
 *** IMPORT NAME DATABASE *****
 ******************************
 
-import excel $SOURCE\BibliometricsGenderRatio\Datasets\SOURCE\02_NAMES.xlsx, sheet("nam_dict") firstrow allstring 
+import excel $SOURCE\source_files\02_NAMES.xlsx, sheet("nam_dict") firstrow allstring 
 
 order name1 gender1 
 drop C D E F G H I J description0genderunknown
@@ -23,19 +23,17 @@ replace gender1 = "2" if name1 == "James" | name1 == "George" | name1 == "Larry"
 replace gender1 = "1" if name1 == "Susan" | name1 == "Maria" 
 *br
 
-//mit diesem Schritt habe ich Namen, die die Datenbank mehrfach aufgef𨲴 und mehreren Kategorien zugeordnet hatte, als "unbekannte Kategorie" codiert und die Doppelungen gel򳣨t.
-//gender nimmt den Wert 1 f𲠥ine Frau an, 0 f𲠥inen Mann
-
+//mit diesem Schritt habe ich Namen, die die Datenbank mehrfach aufgefuehrt und mehreren Kategorien zugeordnet hatte, als "unbekannte Kategorie" codiert und die Doppelungen gel򳣨t.
+//gender nimmt den Wert 1 fuer eine Frau an, 0 fuer einen Mann
 
 save 02_NAMES.dta, replace
-
 
 ******************* STEP 2 ***
 *** IMPORT AUTHOR DATABASE ***
 ******************************
 
 use 02_NAMES.dta, clear
-import delimited $SOURCE/gendered_authorship/paa_conference.txt, varnames(1) clear 
+import delimited $SOURCE\source_files\_paa_conference.txt, varnames(1) clear 
 
 save 02_paa_conference.dta, replace
 
@@ -43,8 +41,6 @@ save 02_paa_conference.dta, replace
 *** GENERATE COAUTHORSHIP ****
 ******************************
 use 02_paa_conference.dta, clear
-
-
 
 gen co_auth = 2 
 replace co_auth = 1 if missing(author2_firstname)

@@ -1,46 +1,45 @@
 clear all
 set more off
 
-global SOURCE "D:\Dateien\Gendered_Authorship\gendered_authorship"
-global DERIVED "D:\Dateien\Gendered_Authorship\gendered_authorship"
+global SOURCE "C:\Users\v.nieberg\Documents\GitHub\gendered_authorship"
 
 ******************* STEP 1 ***
 *** IMPORT NAME DATABASE *****
 ******************************
+*import delimited $SOURCE\source_files\02_NAMES.csv
 
-import excel $SOURCE\source_files\02_NAMES.xlsx, sheet("nam_dict") firstrow allstring 
+*order name1 gender1 
+*drop v3 v4 v5 v6 v7 v8 v9 v10 description0genderunknown1female
 
-order name1 gender1 
-drop C D E F G H I J description0genderunknown
+*bysort name1: g help = 1 if name1[_n+1] != name1[_n]
+*drop if help == .
+*drop help
 
-bysort name1: g help = 1 if name1[_n+1] != name1[_n]
-recode help . = 0
-bysort name1: egen help1 = mean(help)
-replace gender1 = "0" if help1 != 1
-drop if help == 0
-drop help*
-replace gender1 = "2" if name1 == "James" | name1 == "George" | name1 == "Larry" | name1 == "John" | | name1 == "Jack" | name1 == "Paul" | name1 == "Harry" | name1 == "Max" | name1 == "Steven"
-replace gender1 = "1" if name1 == "Susan" | name1 == "Maria" 
+*replace gender 
+
+*replace gender1 = "2" if name1 == "James" | name1 == "George" | name1 == "Larry" | name1 == "John" | | name1 == "Jack" | name1 == "Paul" | name1 == "Harry" | name1 == "Max" | name1 == "Steven"
+*replace gender1 = "1" if name1 == "Susan" | name1 == "Maria" 
 *br
 
 //mit diesem Schritt habe ich Namen, die die Datenbank mehrfach aufgefuehrt und mehreren Kategorien zugeordnet hatte, als "unbekannte Kategorie" codiert und die Doppelungen gel򳣨t.
-//gender nimmt den Wert 1 fuer eine Frau an, 0 fuer einen Mann
+//es fehlt der Umkodierungsschritt. Es soll sein: gender nimmt den Wert 1 fuer eine Frau an, 0 fuer einen Mann, und missing fuer unklar. 
 
-save 02_NAMES.dta, replace
+*save 02_NAMES.dta, replace
 
 ******************* STEP 2 ***
 *** IMPORT AUTHOR DATABASE ***
 ******************************
 
-use 02_NAMES.dta, clear
-import delimited $SOURCE\source_files\_paa_conference.txt, varnames(1) clear 
-
-save 02_paa_conference.dta, replace
+cd $SOURCE\source_files\name_database
+use 02_NAMES.dta, clear\
+//dies ist die korrekt bearbeite Datenbank und abweichend von der oben codierten (work in progress)
+import delimited $SOURCE\source_files\paa_conference\txt_files\paa_conference_final.txt, varnames(1) clear 
+save paa_conference_final.dta, replace
 
 ******************* STEP 3 ***
 *** GENERATE COAUTHORSHIP ****
 ******************************
-use 02_paa_conference.dta, clear
+use paa_conference_final.dta, clear
 
 gen co_auth = 2 
 replace co_auth = 1 if missing(author2_firstname)
@@ -129,9 +128,9 @@ gsort seqnum year auth_number
 ******************* STEP 9 ***
 *** EDIT GENDER IF MISSING ***
 ****************************** 
-
+ 
 ed
 
 //In diesem Schritt ordne ich per Personenidentifikation durch Internetrecherche Personen ein Geschlecht zu.
 
-save 02_paa_conference.dta, replace
+save paa_conference_gendered.dta, replace

@@ -3,44 +3,72 @@ set more off
 
 global SOURCE "C:\Users\v.nieberg\Documents\GitHub\gendered_authorship"
 
+
 ******************* STEP 1 ***
-*** IMPORT NAME DATABASE *****
-******************************
-*import delimited $SOURCE\source_files\02_NAMES.csv
-
-*order name1 gender1 
-*drop v3 v4 v5 v6 v7 v8 v9 v10 description0genderunknown1female
-
-*bysort name1: g help = 1 if name1[_n+1] != name1[_n]
-*drop if help == .
-*drop help
-
-*replace gender 
-
-*replace gender1 = "2" if name1 == "James" | name1 == "George" | name1 == "Larry" | name1 == "John" | | name1 == "Jack" | name1 == "Paul" | name1 == "Harry" | name1 == "Max" | name1 == "Steven"
-*replace gender1 = "1" if name1 == "Susan" | name1 == "Maria" 
-*br
-
-//mit diesem Schritt habe ich Namen, die die Datenbank mehrfach aufgefuehrt und mehreren Kategorien zugeordnet hatte, als "unbekannte Kategorie" codiert und die Doppelungen gel򳣨t.
-//es fehlt der Umkodierungsschritt. Es soll sein: gender nimmt den Wert 1 fuer eine Frau an, 0 fuer einen Mann, und missing fuer unklar. 
-
-*save 02_NAMES.dta, replace
-
-******************* STEP 2 ***
 *** IMPORT AUTHOR DATABASE ***
 ******************************
 
 cd $SOURCE\source_files\name_database
-use 02_NAMES.dta, clear\
-//dies ist die korrekt bearbeite Datenbank und abweichend von der oben codierten (work in progress)
+use 02_NAMES.dta, clear
 import delimited $SOURCE\source_files\paa_conference\txt_files\paa_conference_final.txt, varnames(1) clear 
+cd $SOURCE\source_files\paa_conference
 save paa_conference_final.dta, replace
+
+******************* STEP 2 ***
+*** NAMING VARIABLES *********
+******************************
+
+rename v20 author8_firstname
+rename v21 author8_name
+rename v22 author9_firstname
+rename v23 author9_name
+rename v24 author10_firstname
+rename v25 author10_name
+rename v26 author11_firstname
+rename v27 author11_name
+rename v28 author12_firstname
+rename v29 author12_name
+rename v30 author13_firstname
+rename v31 author13_name
+rename v32 author14_firstname
+rename v33 author14_name
+
+rename author1_firstname firstname1
+rename author1_name surname1
+rename author2_firstname firstname2
+rename author2_name surname2
+rename author3_firstname firstname3
+rename author3_name surname3
+rename author4_firstname firstname4
+rename author4_name surname4
+rename author5_firstname firstname5
+rename author5_name surname5
+rename author6_firstname firstname6
+rename author6_name surname6
+rename author7_firstname firstname7
+rename author7_name surname7
+rename author8_firstname firstname8
+rename author8_name surname8
+rename author9_firstname firstname9
+rename author9_name surname9
+rename author10_firstname firstname10
+rename author10_name surname10
+rename author11_firstname firstname11
+rename author11_name surname11
+rename author12_firstname firstname12
+rename author12_name surname12
+rename author13_firstname firstname13
+rename author13_name surname13
+rename author14_firstname firstname14
+rename author14_name surname14
+
+save paa_conference_final.dta, replace 
 
 ******************* STEP 3 ***
 *** GENERATE COAUTHORSHIP ****
 ******************************
-use paa_conference_final.dta, clear
 
+use paa_conference_final.dta, clear
 gen co_auth = 2 
 replace co_auth = 1 if missing(author2_firstname)
 codebook co_auth
@@ -52,22 +80,6 @@ codebook co_auth
 ******************************
 
 gene seqnum=_n
-
-rename author1_firstname firstname1
-rename author1_name surname_author1
-rename author2_firstname firstname2
-rename author2_name surname_author2
-rename author3_firstname firstname3
-rename author3_name surname_author3
-rename author4_firstname firstname4
-rename author4_name surname_author4
-rename author5_firstname firstname5
-rename author5_name surname_author5
-rename author6_firstname firstname6
-rename author6_name surname_author6
-rename author7_firstname firstname7
-rename author7_name surname_author7
- 
 
 reshape long firstname, i(seqnum) j(auth_number)
 drop if mi(firstname)
